@@ -1,0 +1,15 @@
+{
+  "author": "J. Julian Torp G.",
+  "name": "slack-mention",
+  "version": "1.0.0",
+  "description": "A GitHub Action to allow fetching of slack mention tags based on user email.",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "dependencies": {
+    "@actions/core": "^1.10.1",
+    "@actions/github": "^6.0.0"
+  },
+  "license": "MIT"
+}

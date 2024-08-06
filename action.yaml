@@ -1,0 +1,17 @@
+name: 'Slack Mention'
+description: 'Provides a slack mention tag based on the input email address'
+inputs:
+  slack-token:
+    description: 'The slack application token. (Must have `users:read` & `users:read.email` permissions.'
+  email:
+    description: 'The email of the slack user you want to get a mention tag for'
+    required: true
+  default:
+    description: 'The value to default should the email not exist in the slack workspace'
+    required: true
+outputs:
+  slack-mention-tag:
+    description: 'The slack mention or default value'
+runs:
+  using: 'node20'
+  main: 'index.js'
