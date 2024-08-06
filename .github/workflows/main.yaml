@@ -1,0 +1,16 @@
+on: [push]
+
+jobs:
+  slack-mention:
+    runs-on: ubuntu-latest
+    name: A job to mention to slack
+    steps:
+      - name: Fetch slack mention
+        id: mention
+        uses: jjtg/slack-mention@v1.0
+        with:
+          slack-token: ${{ secrets.SLACK_TOKEN }}
+          email: ${{ secrets.EMAIL }}
+          default: "@here"
+      - name: Get the slack mention tag
+        run: echo "The mention tag is ${{ steps.mention.outputs.slack-mention-tag }}"
