@@ -32,10 +32,9 @@ async function main() {
       const resultJson = await result.json()
       const user = resultJson.members.find((member) => member.profile.email === email);
       core.setOutput("slack-mention-tag", user || defaultValue);
+    } else {
+      core.setFailed(`Failed to fetch user list - [${result.status}: ${result.statusText}]`)
     }
-
-    core.setFailed(`Failed to fetch user list - [${result.status}: ${result.statusText}]`)
-
   } catch (error) {
     core.setFailed(error.message);
   }
