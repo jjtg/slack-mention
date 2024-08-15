@@ -13,6 +13,8 @@ inputs:
 outputs:
   slack-mention-tag:
     description: 'The slack mention or default value'
+  slack-user-id:
+    description: 'The raw slack user ID value (defaults to null)'
 runs:
   using: 'node20'
   main: 'index.js'
