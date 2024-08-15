@@ -1,3 +1,3 @@
-const {execute} = require("action")
+const {execute} = require("./action")
 
 execute()
