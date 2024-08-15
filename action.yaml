@@ -8,6 +8,7 @@ inputs:
     required: true
   default:
     description: 'The value to default should the email not exist in the slack workspace'
+    default: ${{ github.pusher.email }}
     required: true
 outputs:
   slack-mention-tag:
