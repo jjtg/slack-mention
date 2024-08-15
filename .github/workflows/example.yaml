@@ -6,21 +6,21 @@ jobs:
     name: A job to mention to slack
     steps:
       - name: Fetch slack mention
-        id: mention
-        uses: jjtg/slack-mention@v1.0.4
+        id: slack-mention
+        uses: jjtg/slack-mention@v1.0.0
         with:
-          slack-token: ${{ secrets.SLACK_TOKEN }}
-          email: ${{ secrets.EMAIL }}
+          slack-token: ${{ secrets.SLACK_BOT_TOKEN }}
+          email: ${{ github.author.email }}
           default: "@here"
       - name: Get the slack mention tag
-        run: echo "The mention tag is ${{ steps.mention.outputs.slack-mention-tag }}"
+        run: echo "The mention tag is ${{ steps.slack-mention.outputs.slack-mention-tag }}"
       - name: Post to a Slack channel
         id: slack
         uses: slackapi/slack-github-action@v1.26.0
         with:
           # Slack channel id, channel name, or user id to post message.
           # See also: https://api.slack.com/methods/chat.postMessage#channels
-          channel-id: 'C06RH9862BC'
+          channel-id: '<YOUR_CHANNEL_ID>'
           # For posting a rich message using Block Kit
           payload: |
             {
@@ -30,10 +30,10 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "${{ steps.mention.outputs.slack-mention-tag }}\nGitHub Action build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+                    "text": "${{ steps.slack-mention.outputs.slack-mention-tag }}\nGitHub Action build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
                   }
                 }
               ]
             }
         env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_TOKEN }}
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}

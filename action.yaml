@@ -3,13 +3,14 @@ description: 'Provides a slack mention tag based on the input email address'
 inputs:
   slack-token:
     description: 'The slack application token. (Must have `users:read` & `users:read.email` permissions.'
+    required: true
   email:
     description: 'The email of the slack user you want to get a mention tag for'
     required: true
   default:
     description: 'The value to default should the email not exist in the slack workspace'
     default: ${{ github.pusher.email }}
-    required: true
+    required: false
 outputs:
   slack-mention-tag:
     description: 'The slack mention or default value'
