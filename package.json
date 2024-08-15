@@ -5,11 +5,13 @@
   "description": "A GitHub Action to allow fetching of slack mention tags based on user email.",
   "main": "index.js",
   "scripts": {
-    "test": "npm test"
+    "test": "jest test --silent"
   },
   "dependencies": {
-    "@actions/core": "^1.10.1",
-    "@actions/github": "^6.0.0"
+    "@actions/core": "^1.10.1"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
   },
   "license": "MIT"
 }
