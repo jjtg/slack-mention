@@ -1,7 +1,8 @@
 name: 'Slack Mention'
 description: 'Provides a slack mention tag based on the input email address'
-color: 'purple'
-icon: 'at-sign'
+branding:
+  color: 'purple'
+  icon: 'at-sign'
 labels: [slack, mention, CICD, pipeline, CI]
 inputs:
   slack-token:
