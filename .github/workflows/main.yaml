@@ -10,7 +10,7 @@ jobs:
         uses: jjtg/slack-mention@v1.0.2
         with:
           slack-token: ${{ secrets.SLACK_TOKEN }}
-          email: ${{ secrets.EMAIL }}
+          email: ${{ secrets.EMAIL }}s
           default: "@here"
       - name: Get the slack mention tag
         run: echo "The mention tag is ${{ steps.mention.outputs.slack-mention-tag }}"
