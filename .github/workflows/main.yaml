@@ -7,7 +7,7 @@ jobs:
     steps:
       - name: Fetch slack mention
         id: mention
-        uses: jjtg/slack-mention@v1.0.2
+        uses: jjtg/slack-mention@v1.0.3
         with:
           slack-token: ${{ secrets.SLACK_TOKEN }}
           email: ${{ secrets.EMAIL }}s
