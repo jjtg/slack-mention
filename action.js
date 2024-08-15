@@ -31,6 +31,5 @@ async function execute() {
 
 
 module.exports = {
-  execute,
-  fetchUsers
+  execute
 }
