@@ -22,19 +22,30 @@ jest.mock("@actions/core", function () {
   }
 })
 
-global.fetch = jest.fn(() =>
-  Promise.resolve({
-    ok: true,
-    json: () => Promise.resolve({
-      members: [{
-        id: 1,
-        profile: {
-          email: "test@test.com"
+const succeed = () => {
+  global.fetch = jest.fn(() =>
+    Promise.resolve({
+      status: 200,
+      json: () => Promise.resolve({
+        user: {
+          id: 1,
+          profile: {
+            email: "test@test.com"
+          }
         }
-      }]
-    }),
-  })
-);
+      }),
+    })
+  );
+}
+
+const fail = () => {
+  global.fetch = jest.fn(() =>
+    Promise.resolve({
+      status: 404,
+      json: () => Promise.resolve({}),
+    })
+  );
+}
 
 const core = require('@actions/core');
 
@@ -44,6 +55,7 @@ describe("Test main function", () => {
     jest.clearAllMocks()
   })
   it("Should return outputs when ID is found", async () => {
+    succeed()
     await execute()
     expect(core.setFailed).not.toHaveBeenCalled()
     expect(core.getInput).toBeCalledTimes(3)
@@ -51,6 +63,7 @@ describe("Test main function", () => {
     expect(core.setOutput).toHaveBeenCalledWith("slack-user-id", 1)
   })
   it("Should return default when ID is not found", async () => {
+    fail()
     process.env.EMAIL = "non-existing-email@email.com"
     await execute()
     expect(core.setFailed).not.toHaveBeenCalled()
@@ -60,6 +73,7 @@ describe("Test main function", () => {
 
   })
   it("Should return error when fetching fails", async () => {
+    succeed()
     global.fetch.mockImplementation(() => {
       throw Error("Test error")
     })
@@ -67,6 +81,7 @@ describe("Test main function", () => {
     expect(core.setFailed).toHaveBeenCalledWith("Test error")
   })
   it("Should return error when an unexpected error happens", async () => {
+    succeed()
     global.fetch.mockImplementation(() => Promise.resolve({
       ok: false,
       status: 418,
