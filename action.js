@@ -1,8 +1,8 @@
 const core = require('@actions/core');
 
-async function fetchUsers(slackToken) {
+async function fetchUsers(slackToken, email) {
 
-  return fetch("https://slack.com/api/users.list", {
+  return fetch(`https://slack.com/api/users.lookupByEmail?email=${email}`, {
     method: "GET",
     headers: {
       "Authorization": `Bearer ${slackToken}`
@@ -15,10 +15,10 @@ async function execute() {
     const slackToken = core.getInput('slack-token');
     const email = core.getInput('email');
     const defaultValue = core.getInput('default');
-    const result = await fetchUsers(slackToken)
+    const result = await fetchUsers(slackToken, email);
     if (result.ok) {
       const resultJson = await result.json()
-      const user = resultJson.members.find((member) => member.profile.email === email)?.id;
+      const user = resultJson?.user?.id;
       core.setOutput("slack-mention-tag", user ? `<@${user}>` : defaultValue);
       core.setOutput("slack-user-id", user || null)
     } else {
